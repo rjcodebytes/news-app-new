@@ -107,13 +107,9 @@ function loadNews() {
         const newsItem = document.createElement("div");
         newsItem.className = "news-item";
         newsItem.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div style="flex: 1;">
-              <h3>${escapeHtml(item.title)}</h3>
-              <p>${escapeHtml(item.description)}</p>
-            </div>
-            <button class="delete-btn" onclick="deleteNews('${item._id}')">🗑️</button>
-          </div>
+          <button class="delete-btn" onclick="deleteNews('${item._id}')">✕</button>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.description)}</p>
         `;
         newsList.appendChild(newsItem);
       });
