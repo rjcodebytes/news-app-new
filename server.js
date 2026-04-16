@@ -33,6 +33,18 @@ app.get("/news", async (req, res) => {
     res.json(data);
 });
 
+// DELETE - Remove news
+app.delete("/news/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await News.findByIdAndDelete(id);
+        res.json({ message: "News deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to delete news" });
+    }
+});
+
 app.listen(3000, "0.0.0.0", () => {
     console.log("Server running on http://localhost:3000");
 });

@@ -43,6 +43,26 @@ function clearForm() {
   document.getElementById("title").focus();
 }
 
+// Delete News
+function deleteNews(id) {
+  if (!confirm("Are you sure you want to delete this news?")) {
+    return;
+  }
+
+  fetch(`/news/${id}`, {
+    method: "DELETE"
+  })
+  .then(res => res.json())
+  .then(data => {
+    loadNews();
+    showNotification("🗑️ News deleted successfully!");
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    showNotification("❌ Failed to delete news. Please try again.");
+  });
+}
+
 // Show Notification
 function showNotification(message) {
   // Simple notification - you can enhance this later
@@ -87,8 +107,13 @@ function loadNews() {
         const newsItem = document.createElement("div");
         newsItem.className = "news-item";
         newsItem.innerHTML = `
-          <h3>${escapeHtml(item.title)}</h3>
-          <p>${escapeHtml(item.description)}</p>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="flex: 1;">
+              <h3>${escapeHtml(item.title)}</h3>
+              <p>${escapeHtml(item.description)}</p>
+            </div>
+            <button class="delete-btn" onclick="deleteNews('${item._id}')">🗑️</button>
+          </div>
         `;
         newsList.appendChild(newsItem);
       });
